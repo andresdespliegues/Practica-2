@@ -1,42 +1,41 @@
-name: Terraform AWS Undeployment
+name: Terraform AWS Deployment
 
 on:
   push:
     branches:
-      - main  # Cambia "main" por la rama donde quieres activar el undeployment
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  undeploy:
+  terraform:
+    name: Terraform Apply
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del repositorio
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Paso 2: Configurar credenciales de AWS
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN}}  # Solo si usas tokens temporales
-          aws-region: "us-east-1"  # Cambia a la región de AWS que estás usando
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.5.0 # Asegúrate de usar la versión de Terraform que prefieras
 
-      # Paso 3: Configurar Terraform
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.4.6  # Define la versión de Terraform que usas
+    - name: Terraform Init
+      run: terraform init
 
-      # Paso 4: Inicializar Terraform
-      - name: Initialize Terraform
-        run: terraform init
+    - name: Terraform Validate
+      run: terraform validate
 
-      # Paso 5: Planear la destrucción
-      - name: Terraform plan
-        run: terraform plan 
+    - name: Terraform Plan
+      run: terraform plan
 
-      # Paso 6: Aplicar la destrucción (Undeployment)
-      - name: Terraform apply 
-        run: terraform apply -auto-approve 
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-1 # O la región que prefieras
+
+
