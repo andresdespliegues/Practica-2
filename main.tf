@@ -174,7 +174,7 @@ resource "aws_instance" "debian_instance" {
 
 //Creamos el bucket
 resource "aws_s3_bucket" "bucket" {
-  bucket = "aopdebianbucket"
+  bucket = "aopdebianbucket-1"
   force_destroy = true //este parámetro fuerza la eliminacion del bucket incluso si hay datos almacenados (objetos)
   lifecycle {
     prevent_destroy = false //terraform no evitará la destruccion del recurso 
