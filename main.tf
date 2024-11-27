@@ -213,25 +213,22 @@ resource "aws_s3_bucket_policy" "public_policy" {
   })
 }
 
-resource "aws_s3_object" "index" {
-  bucket       = aws_s3_bucket.bucket.id  # Aquí refieres al bucket que ya has creado
-  key          = "index.html"             # El nombre del objeto en S3
-  source       = "C:/Users/nenis/Desktop/DAW2/Despliegues/NUEVA PRACTICA/Practica-2/index.html"  # Ruta local al archivo
-  content_type = "text/html"              # Tipo de contenido (MIME Type)
+resource "aws_s3_bucket_object" "index_html" {
+  bucket = aws_s3_bucket.mi_bucket.id
+  key    = "index.html" # Nombre en el bucket
+  source = "${path.module}/index.html" # Ruta al archivo
 }
 
-resource "aws_s3_object" "estilos" {
-  bucket       = aws_s3_bucket.bucket.id  # Referencia al bucket
-  key          = "estilos.css"            # Nombre del objeto en el bucket
-  source       = "C:/Users/nenis/Desktop/DAW2/Despliegues/NUEVA PRACTICA/Practica-2/estilos.css"  # Ruta local al archivo
-  content_type = "text/css"               # Tipo de contenido (MIME Type)
+resource "aws_s3_bucket_object" "script_js" {
+  bucket = aws_s3_bucket.mi_bucket.id
+  key    = "script.js" # Nombre en el bucket
+  source = "${path.module}/script.js" # Ruta al archivo
 }
 
-resource "aws_s3_object" "script" {
-  bucket       = aws_s3_bucket.bucket.id  # Referencia al bucket
-  key          = "script.js"              # Nombre del objeto en el bucket
-  source       = "C:/Users/nenis/Desktop/DAW2/Despliegues/NUEVA PRACTICA/Practica-2/script.js"  # Ruta local al archivo
-  content_type = "application/javascript"  # Tipo de contenido (MIME Type)
+resource "aws_s3_bucket_object" "estilos_css" {
+  bucket = aws_s3_bucket.mi_bucket.id
+  key    = "estilos.css" # Nombre en el bucket
+  source = "${path.module}/estilos.css" # Ruta al archivo
 }
 
 
