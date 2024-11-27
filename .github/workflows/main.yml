@@ -1,0 +1,42 @@
+name: Terraform AWS Undeployment
+
+on:
+  push:
+    branches:
+      - main  # Cambia "main" por la rama donde quieres activar el undeployment
+
+jobs:
+  undeploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Paso 2: Configurar credenciales de AWS
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN}}  # Solo si usas tokens temporales
+          aws-region: "us-east-1"  # Cambia a la región de AWS que estás usando
+
+      # Paso 3: Configurar Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.6  # Define la versión de Terraform que usas
+
+      # Paso 4: Inicializar Terraform
+      - name: Initialize Terraform
+        run: terraform init
+
+      # Paso 5: Planear la destrucción
+      - name: Terraform plan
+        run: terraform plan 
+
+      # Paso 6: Aplicar la destrucción (Undeployment)
+      - name: Terraform apply 
+        run: terraform apply -auto-approve 
