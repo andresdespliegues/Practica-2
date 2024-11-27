@@ -214,19 +214,19 @@ resource "aws_s3_bucket_policy" "public_policy" {
 }
 
 resource "aws_s3_bucket_object" "index_html" {
-  bucket = aws_s3_bucket.mi_bucket.id
+  bucket = aws_s3_bucket.bucket.id
   key    = "index.html" # Nombre en el bucket
   source = "${path.module}/index.html" # Ruta al archivo
 }
 
 resource "aws_s3_bucket_object" "script_js" {
-  bucket = aws_s3_bucket.mi_bucket.id
+  bucket = aws_s3_bucket.bucket.id
   key    = "script.js" # Nombre en el bucket
   source = "${path.module}/script.js" # Ruta al archivo
 }
 
 resource "aws_s3_bucket_object" "estilos_css" {
-  bucket = aws_s3_bucket.mi_bucket.id
+  bucket = aws_s3_bucket.bucket.id
   key    = "estilos.css" # Nombre en el bucket
   source = "${path.module}/estilos.css" # Ruta al archivo
 }
