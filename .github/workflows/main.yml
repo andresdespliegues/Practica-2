@@ -41,8 +41,6 @@ jobs:
       - name: Terraform Apply (Destruction)
         run: terraform apply -auto-approve tfplan
 
-      # Paso 7: Confirmar destrucción
-      - name: Terraform Destroy Confirmed
-        run: terraform show
+      
 
 
