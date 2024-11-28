@@ -1,3 +1,3 @@
 function mostrarContacto() {
-    alert("Para más información, contáctanos en: info@cooperativadeaceite.com");
+    alert("Para más información, contactanos en: info@cooperativadeaceite.com");
 }
