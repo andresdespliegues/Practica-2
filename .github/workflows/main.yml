@@ -20,7 +20,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}  # Solo si usas tokens temporales
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN}}  # Solo si usas tokens temporales
           aws-region: "us-east-1"  # Cambia a la región de AWS que estás usando
 
       # Paso 3: Configurar Terraform
@@ -34,12 +34,12 @@ jobs:
         run: terraform init
 
       # Paso 5: Planear la destrucción
-      - name: Terraform Plan (Destruction)
-        run: terraform plan -destroy -out=tfplan
+      - name: Terraform plan
+        run: terraform plan 
 
       # Paso 6: Aplicar la destrucción (Undeployment)
-      - name: Terraform Apply (Destruction)
-        run: terraform apply -auto-approve tfplan
+      - name: Terraform apply 
+        run: terraform apply -auto-approve 
 
       
 
